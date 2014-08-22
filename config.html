@@ -1,0 +1,73 @@
+<?php
+
+global $OUTPUT;
+
+// Set to defaults if undefined
+if (!isset($config->sp_source)) {
+$config->sp_source = '';
+}
+if (!isset($config->username)) {
+$config->username = '';
+}
+if (empty($config->dosinglelogout)) {
+$config->dosinglelogout = 0;
+}
+if (empty($config->local_user)) {
+$config->local_user = 'username';
+}
+?>
+
+<table cellspacing="0" cellpadding="5" border="0">
+
+    <tr valign="top" class="required">
+        <td align="right">
+            <label for="sp_source"><?php print_string('saml_sp_source', 'auth_saml') ?></label>
+        </td>
+        <td>
+            <input name="sp_source" id="sp_source" type="text" size="30" value="<?php echo $config->sp_source?>" />
+            <?php if (isset($err['sp_source'])) { echo $OUTPUT->error_text($err['saml_sp_source']); } ?>
+        </td>
+        <td>
+            <?php print_string('saml_sp_source_description', 'auth_saml') ?>
+        </td>
+    </tr>
+    <tr valign="top" class="required">
+        <td align="right">
+            <label for="username"><?php print_string('saml_username', 'auth_saml') ?></label>
+        </td>
+        <td>
+            <input name="username" id="username" type="text" size="30" value="<?php echo $config->username?>" />
+            <?php if (isset($err['username'])) { echo $OUTPUT->error_text($err['saml_username']); } ?>
+        </td>
+        <td>
+            <?php print_string('saml_username_description', 'auth_saml') ?>
+        </td>
+    </tr>
+    <tr valign="top" class="required">
+        <td align="right">
+            <label for="local_user"><?php print_string('saml_local_user', 'auth_saml') ?></label>
+        </td>
+        <td>
+            <?php
+                $values = array('username','idnumber','email');
+                echo html_writer::select(array_combine($values,$values), 'local_user', $config->local_user);
+            ?>
+        </td>
+        <td>
+            <?php print_string('saml_local_user_description', 'auth_saml') ?>
+        </td>
+    </tr>
+
+    <tr valign="top" class="required">
+        <td align="right">
+            <label for="dosinglelogout"><?php print_string('saml_dosinglelogout', 'auth_saml') ?></label>
+        </td>
+        <td>
+            <?php echo html_writer::select(array(1 => 'Yes',0 => 'No'), 'dosinglelogout', $config->dosinglelogout, 0); ?>
+        </td>
+        <td>
+            <?php print_string('saml_dosinglelogout_description', 'auth_saml') ?>
+        </td>
+    </tr>
+</table>
+
